@@ -1,5 +1,3 @@
-# app.py
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -14,18 +12,21 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
 import warnings
 warnings.filterwarnings("ignore")
 
-# Function to load data
+# Function to load data from a URL
 @st.cache
-def load_data():
+def load_data(url):
     try:
-        data = pd.read_csv("weatherAUS.csv")
+        data = pd.read_csv(url)
         return data
     except Exception as e:
         st.error(f"Error loading data: {e}")
         return None
 
+# URL for the CSV file
+url = "https://drive.google.com/uc?id=1z29oToTgvuK9QsJHs_9WcTUvzuZeXe0L"
+
 # Load the dataset
-data = load_data()
+data = load_data(url)
 
 if data is not None:
     # Function to generate histograms
@@ -84,4 +85,4 @@ if data is not None:
     st.subheader('Minimum Temperature vs Maximum Temperature by Rainfall')
     st.pyplot(generate_scatter_plot())
 else:
-    st.warning("Data could not be loaded. Please check the data file and try again.")
+    st.warning("Data could not be loaded. Please check the data URL and try again.")
