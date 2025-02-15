@@ -11,14 +11,22 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_curve, roc_auc_score
 import warnings
 warnings.filterwarnings("ignore")
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Function to load data from a URL
 @st.cache
 def load_data(url):
     try:
+        logger.info(f"Attempting to load data from {url}")
         data = pd.read_csv(url)
+        logger.info("Data loaded successfully")
         return data
     except Exception as e:
+        logger.error(f"Error loading data: {e}")
         st.error(f"Error loading data: {e}")
         return None
 
